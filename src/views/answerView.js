@@ -6,8 +6,13 @@
  */
 export const createAnswerElement = (key, answerText) => {
   const element = document.createElement('li');
-  element.innerHTML = String.raw`
+  const button = document.createElement('button');
+  button.classList.add('answerBtn');
+  element.appendChild(button)
+  button.innerHTML = String.raw`
     ${key}: ${answerText};
   `;
-  return element;
+  button.getAttribute("value", `${key}`);
+  button.getAttribute("type", "radio");
+  return button;
 };

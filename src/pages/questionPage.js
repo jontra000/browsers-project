@@ -29,10 +29,23 @@ export const initQuestionPage = () => {
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
     .addEventListener('click', nextQuestion);
+  
+  document
+    .querySelectorAll(ANSWERS_LIST_ID).forEach(el =>{
+      el.addEventListener('click', checkAnswer (e) ,{
+        const value = button.value;
+        answersListElement.push(value);
+      })
+      });
+    
 };
+
+
 
 const nextQuestion = () => {
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
-
   initQuestionPage();
 };
+
+
+
