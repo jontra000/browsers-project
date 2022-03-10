@@ -12,51 +12,117 @@
 */
 
 export const quizData = {
-  currentQuestionIndex: 0,
-  // the questions in the quiz
-  questions: [
-    {
-      text: 'What are the different ways to declare a JS variable?',
-      answers: {
-        a: 'constant, let, variable',
-        b: 'var, const, let, function',
-        c: 'var, let, const',
-      },
-      correct: 'c',
-      selected: null,
-      links: [
-        {
-          text: 'javascript.info',
-          href: 'https://javascript.info/variables',
+    currentQuestionIndex: 0,
+    // the questions in the quiz
+    questions: [{
+            text: 'What does "HOND" mean in ENGLISH?',
+            answers: {
+                a: 'CAT',
+                b: 'DOG',
+                c: 'BIRD',
+                d: 'GIRAFFE',
+            },
+            correct: 'b',
+            selected: null,
         },
         {
-          text: 'Tyler McGinnis',
-          href: 'https://ui.dev/var-let-const/',
-        },
-      ],
-    },
-    {
-      text: 'What does `typeof` do?',
-      answers: {
-        a: 'changes the type of a primitive value',
-        b: 'returns a string describing the type of a value',
-        c: 'determines if a value is primitive',
-        d: 'can tell the difference between arrays and objects',
-      },
-      correct: 'b',
-      selected: null,
-      links: [
-        {
-          text: 'javascript.info',
-          href: 'https://javascript.info/types#type-typeof',
+            text: 'What does "TURTLE" mean in DUTCH?',
+            answers: {
+                a: 'NEUSHOORN',
+                b: 'VOGEL',
+                c: 'PAARD',
+                d: 'SCHILDPAD',
+            },
+            correct: 'd',
+            selected: null,
         },
         {
-          text: 'MDN',
-          href:
-            'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof',
+            text: 'What does "DOCHTER" mean in ENGLISH?',
+            answers: {
+                a: 'SISTER',
+                b: 'FATHER',
+                c: 'DAUGHTER',
+                d: 'SON',
+            },
+            correct: 'c',
+            selected: null,
         },
-      ],
-    },
-    // Add more questions here
-  ],
+        {
+            text: 'What does "SISTER" mean in DUTCH?',
+            answers: {
+                a: 'BROER',
+                b: 'ZUS',
+                c: 'NICHT',
+                d: 'TANTE',
+            },
+            correct: 'b',
+            selected: null,
+        },
+        {
+            text: 'What does "NEEF" mean in ENGLISH?',
+            answers: {
+                a: 'FATHER',
+                b: 'NEPHEW',
+                c: 'UNCLE',
+                d: 'BROTHER',
+            },
+            correct: 'b',
+            selected: null,
+        },
+        {
+            text: 'What does "MARRIED" mean in DUTCH?',
+            answers: {
+                a: 'BRUID',
+                b: 'WEDUWE',
+                c: 'ALLEEN',
+                d: 'GETROUWD',
+            },
+            correct: 'd',
+            selected: null,
+        },
+        {
+            text: 'What does "BROEK" mean in ENGLISH?',
+            answers: {
+                a: 'DRESS',
+                b: 'PANTS',
+                c: 'SKIRTS',
+                d: 'SWEATSHIRT',
+            },
+            correct: 'b',
+            selected: null,
+        },
+        {
+            text: 'What does "SHOE" mean in DUTCH?',
+            answers: {
+                a: 'ROK',
+                b: 'HOED',
+                c: 'SCHOEN',
+                d: 'ONDERGOED',
+            },
+            correct: 'c',
+            selected: null,
+        },
+        {
+            text: 'What does "ZWART" mean in ENGLISH?',
+            answers: {
+                a: 'BLACK',
+                b: 'BLUE',
+                c: 'PINK',
+                d: 'YELLOW',
+            },
+            correct: 'a',
+            selected: null,
+        },
+        {
+            text: 'What does "GREEN" mean in DUTCH?',
+            answers: {
+                a: 'ROOD',
+                b: 'ORANJE',
+                c: 'PAARS',
+                d: 'GROEN',
+            },
+            correct: 'd',
+            selected: null,
+        },
+    ],
 };
