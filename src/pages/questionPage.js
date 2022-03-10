@@ -22,27 +22,22 @@ export const initQuestionPage = (userInterface) => {
     let score = 0;
 
     const selectAnswer = (e) => {
-        currentQuestion.selected = e.target.key;
-
-
+        currentQuestion.selected = e.target.dataset.key;
 
         if (currentQuestion.selected === currentQuestion.correct) {
             e.target.classList.add('Correct');
             score++;
+            e.target.style.backgroundColor = 'green';
 
         } else {
             e.target.classList.add('Wrong');
             score;
+            e.target.style.backgroundColor = 'red';
         };
-        const correctAnswer = document.querySelector(
-            `li[data-key="${currentQuestion.correct}"]`
-        );
 
-        correctAnswer.style.backgroundColor = 'yellow';
+
+
         score;
-
-
-
     };
 
 
