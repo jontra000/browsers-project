@@ -48,7 +48,7 @@ const nextQuestion = () => {
 
 //Checks if selected answer is correct
 const checkAnswer = (evt) => {
-
+  const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
   const value = evt.target.value;
      userAnswers.push(value);
  
