@@ -8,8 +8,10 @@ import {
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { quizData } from '../data.js';
+import { SHOW_SCORE_ID } from "../constants.js";
 
 export const initQuestionPage = (userInterface) => {
+
 
     userInterface = document.getElementById(USER_INTERFACE_ID);
     userInterface.innerHTML = '';
@@ -19,27 +21,32 @@ export const initQuestionPage = (userInterface) => {
     const questionElement = createQuestionElement(currentQuestion.text);
 
     userInterface.appendChild(questionElement);
-    let score = 0;
+
+    const showScore = (correctAnswers, totalQuestions) => {
+        const scoreElement = document.createElement("p");
+        scoreElement.setAttribute("id", SHOW_SCORE_ID);
+        scoreElement.innerHTML = String.raw ` <p class="score-title"> ${correctAnswers} / ${totalQuestions}</p> `;
+        return scoreElement;
+    };
+
+    const currentScore = showScore(quizData.score, quizData.questions.length);
+    userInterface.appendChild(currentScore);
+
 
     const selectAnswer = (e) => {
         currentQuestion.selected = e.target.dataset.key;
 
         if (currentQuestion.selected === currentQuestion.correct) {
             e.target.classList.add('Correct');
-            score++;
             e.target.style.backgroundColor = 'green';
+            quizData.score++;
 
         } else {
             e.target.classList.add('Wrong');
-            score;
             e.target.style.backgroundColor = 'red';
         };
 
-
-
-        score;
     };
-
 
 
     const answersListElement = document.getElementById(ANSWERS_LIST_ID);
@@ -48,14 +55,11 @@ export const initQuestionPage = (userInterface) => {
         const answerElement = createAnswerElement(key, answerText);
         answerElement.setAttribute('data-key', key)
         answersListElement.appendChild(answerElement);
+
+        for (const selection of answersListElement.children) {
+            selection.addEventListener('click', selectAnswer);
+        }
     }
-
-    for (const selection of answersListElement.children) {
-        selection.addEventListener('click', selectAnswer);
-    }
-
-
-
 
 
     document
