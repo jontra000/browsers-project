@@ -19,3 +19,5 @@ export const initWelcomePage = () => {
 const startQuiz = () => {
   initQuestionPage();
 };
+
+//const userAnswersStorage = sessionStorage.getItem("userAnswer");

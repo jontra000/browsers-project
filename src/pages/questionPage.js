@@ -29,10 +29,51 @@ export const initQuestionPage = () => {
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
     .addEventListener('click', nextQuestion);
+  
+ //adding event listener on click
+ document
+ .getElementById(ANSWERS_LIST_ID)
+ .addEventListener('click', checkAnswer);
 };
+
+const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+let userAnswers = [];
+console.log(userAnswers);
+let score = 0;
 
 const nextQuestion = () => {
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
-
   initQuestionPage();
 };
+
+//Checks if selected answer is correct
+const checkAnswer = (evt) => {
+  const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+  const value = evt.target.value;
+     userAnswers.push(value);
+ 
+   if (value === currentQuestion.correct) {
+     answerIsCorrect();
+   } else {
+     answerIsWrong();
+   }
+   //if answer is correct
+ function answerIsCorrect() {
+  score++;
+  evt.target.style.backgroundColor = "green";
+  alert(`Correct! Your current score is ${score}`);
+}
+
+//if answer is wrong
+function answerIsWrong() {
+  score;
+  evt.target.style.backgroundColor = "green";
+  alert(`You will get it right next time! Your current score is ${score}`);
+}
+  }
+ 
+ 
+
+
+
+
