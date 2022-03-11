@@ -37,9 +37,9 @@ export const initQuestionPage = () => {
 };
 
 const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
-console.log(currentQuestion.correct);
 let userAnswers = [];
-//let score = 0;
+console.log(userAnswers);
+let score = 0;
 
 const nextQuestion = () => {
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
@@ -57,18 +57,23 @@ const checkAnswer = (evt) => {
    } else {
      answerIsWrong();
    }
- }
- 
- //if answer is correct
+   //if answer is correct
  function answerIsCorrect() {
-   //score++;
-   alert("Correct!");
- }
+  score++;
+  evt.target.style.backgroundColor = "green";
+  alert(`Correct! Your current score is ${score}`);
+}
+
+//if answer is wrong
+function answerIsWrong() {
+  score;
+  evt.target.style.backgroundColor = "green";
+  alert(`You will get it right next time! Your current score is ${score}`);
+}
+  }
  
- //if answer is wrong
- function answerIsWrong() {
-   //score;
-   alert("You'll get it right next time!")
- }
+ 
+
+
 
 
