@@ -30,15 +30,14 @@ export const initQuestionPage = () => {
     .getElementById(NEXT_QUESTION_BUTTON_ID)
     .addEventListener('click', nextQuestion);
   
- //adding event listener on click
+ //adding event listener on click to check answer
  document
  .getElementById(ANSWERS_LIST_ID)
  .addEventListener('click', checkAnswer);
 };
 
 const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
-let userAnswers = [];
-console.log(userAnswers);
+
 let score = 0;
 
 const nextQuestion = () => {
@@ -50,7 +49,6 @@ const nextQuestion = () => {
 const checkAnswer = (evt) => {
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
   const value = evt.target.value;
-     userAnswers.push(value);
  
    if (value === currentQuestion.correct) {
      answerIsCorrect();
@@ -67,11 +65,11 @@ const checkAnswer = (evt) => {
 //if answer is wrong
 function answerIsWrong() {
   score;
-  evt.target.style.backgroundColor = "green";
+  evt.target.style.backgroundColor = "red";
   alert(`You will get it right next time! Your current score is ${score}`);
 }
   }
- 
+  
  
 
 
