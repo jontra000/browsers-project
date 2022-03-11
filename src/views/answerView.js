@@ -6,13 +6,14 @@
  */
 export const createAnswerElement = (key, answerText) => {
   const element = document.createElement('li');
-  const button = document.createElement('button');
-  button.classList.add('answerBtn');
-  element.appendChild(button)
+  const button = document.createElement("button");
+  button.className = "answerBtn";
+  element.appendChild(button);
   button.innerHTML = String.raw`
     ${key}: ${answerText};
   `;
-  button.getAttribute("value", `${key}`);
-  button.getAttribute("type", "radio");
+  button.setAttribute("id",`choice ${key}`)
+  button.setAttribute("type", "radio");
+  button.setAttribute("value", `${key}`);
   return button;
 };

@@ -30,22 +30,45 @@ export const initQuestionPage = () => {
     .getElementById(NEXT_QUESTION_BUTTON_ID)
     .addEventListener('click', nextQuestion);
   
-  document
-    .querySelectorAll(ANSWERS_LIST_ID).forEach(el =>{
-      el.addEventListener('click', checkAnswer (e) ,{
-        const value = button.value;
-        answersListElement.push(value);
-      })
-      });
-    
+ //adding event listener on click
+ document
+ .getElementById(ANSWERS_LIST_ID)
+ .addEventListener('click', checkAnswer);
 };
 
-
+const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+console.log(currentQuestion.correct);
+let userAnswers = [];
+//let score = 0;
 
 const nextQuestion = () => {
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
   initQuestionPage();
 };
 
+//Checks if selected answer is correct
+const checkAnswer = (evt) => {
+
+  const value = evt.target.value;
+     userAnswers.push(value);
+ 
+   if (value === currentQuestion.correct) {
+     answerIsCorrect();
+   } else {
+     answerIsWrong();
+   }
+ }
+ 
+ //if answer is correct
+ function answerIsCorrect() {
+   //score++;
+   alert("Correct!");
+ }
+ 
+ //if answer is wrong
+ function answerIsWrong() {
+   //score;
+   alert("You'll get it right next time!")
+ }
 
 
