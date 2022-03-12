@@ -1,6 +1,6 @@
 'use strict';
 
-// import { START_QUIZ_BUTTON_ID } from '../constants.js';
+import { RESTART_QUIZ_BUTTON_ID } from '../constants.js';
 import { score, selectedAnswers } from '../pages/questionPage.js'
 import { quizData } from '../data.js';
 
@@ -23,15 +23,16 @@ export const showResults = () => {
 
   element.innerHTML = String.raw`
     <h1 id="title"> The Result of the Quiz  <h1>
+    <hr>
     <h5> You have answered ${score} / 10 questions as true </h5>
+    <h5> You have got ${score * 10} points</h5>
+    <hr>
     <h5> Your answers are: </h5> 
     <p> ${selectedAnswers.join('-')} <p/>
-    
+    <hr>
     <h5> Correct answers are: </h5> 
     <p> ${answers.join('-')} <p/>
+    <button id="${RESTART_QUIZ_BUTTON_ID}"><span> Restart Quiz </span></button>
   `;
   return element;
 };
-
-
-// <button id="${START_QUIZ_BUTTON_ID}"><span> start quiz </span></button>

@@ -18,9 +18,9 @@ export const createQuestionElement = (question) => {
     <h1>${quizData.currentQuestionIndex + 1}. ${question}</h1>
 
     <div class="timeDiv">
-      <p id="time-left"> TIME LEFT</p>
-      <p id="timeCount">15</p>
-      <p id="score"> ${score * 10} points </p>
+      <p id="time-left">TIME LEFT:</p>
+      <p id="timeCount">15</p> 
+      <p id="score">Score: ${score * 10} points </p>
     </div>
 
     <ul id="${ANSWERS_LIST_ID}">
