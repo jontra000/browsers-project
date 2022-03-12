@@ -34,10 +34,15 @@ export const initQuestionPage = () => {
  document
  .getElementById(ANSWERS_LIST_ID)
  .addEventListener('click', checkAnswer);
+
+  //adding event listener on click to save selected answer
+  document
+  .getElementById(ANSWERS_LIST_ID)
+  .addEventListener('click', saveAnswer);
 };
 
 const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
-
+let userAnswers = [];
 let score = 0;
 
 const nextQuestion = () => {
@@ -48,12 +53,13 @@ const nextQuestion = () => {
 //Checks if selected answer is correct
 const checkAnswer = (evt) => {
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
-  const value = evt.target.value;
+  const targetValue = evt.target.value;
  
-   if (value === currentQuestion.correct) {
+   if (targetValue === currentQuestion.correct) {
      answerIsCorrect();
    } else {
      answerIsWrong();
+     showCorrectAnswer();
    }
    //if answer is correct
  function answerIsCorrect() {
@@ -61,15 +67,47 @@ const checkAnswer = (evt) => {
   evt.target.style.backgroundColor = "green";
   alert(`Correct! Your current score is ${score}`);
 }
-
 //if answer is wrong
-function answerIsWrong() {
+  function answerIsWrong() {
   score;
   evt.target.style.backgroundColor = "red";
   alert(`You will get it right next time! Your current score is ${score}`);
-}
+  alert(`The correct answer is ${currentQuestion.correct}`);
   }
+  function showCorrectAnswer() {
+   ANSWERS_LIST_ID.forEach(x => {
+ if (x.value !==  currentQuestion.correct){
+   x.style.backgroundColor="red";
+ } else {
+   x.style.backgroundColor="green";
+ }
+   });
+  }
+}
   
+
+ //saves user's selected answers 
+const saveAnswer = (e) => {
+  const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+  const value = e.target.value;
+  const answerObj = {
+    'Question': quizData.currentQuestionIndex + 1,
+    'Answer' : value
+  }
+  userAnswers.push(answerObj);
+  console.log(userAnswers);
+
+ //saves answers on window reload
+ localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+}
+
+//retrieves user's answers on page reload
+window.onload = function() {
+  if (localStorage.getItem('userAnswers')) {
+    userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
+  }
+
+
  
 
 
