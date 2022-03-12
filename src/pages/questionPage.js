@@ -22,6 +22,7 @@ export const initQuestionPage = (userInterface) => {
 
     userInterface.appendChild(questionElement);
 
+
     const showScore = (correctAnswers, totalQuestions) => {
         const scoreElement = document.createElement("p");
         scoreElement.setAttribute("id", SHOW_SCORE_ID);
@@ -41,87 +42,141 @@ export const initQuestionPage = (userInterface) => {
         answersListElement.appendChild(answerElement);
     };
 
-    document
-        .getElementById(NEXT_QUESTION_BUTTON_ID)
-        .addEventListener('click', nextQuestion);
+  document
+    .getElementById(NEXT_QUESTION_BUTTON_ID)
+    .addEventListener('click', nextQuestion);
+  
 
-    //adding event listener on click to check answer
-    document
-        .getElementById(ANSWERS_LIST_ID)
-        .addEventListener('click', checkAnswer);
+ //adding event listener on click to check answer
 
-    //adding event listener on click to save selected answer
-    document
-        .getElementById(ANSWERS_LIST_ID)
-        .addEventListener('click', saveAnswer);
+ document
+ .getElementById(ANSWERS_LIST_ID)
+ .addEventListener('click', checkAnswer);
+
+ //adding event listener on click to save selected answer
+
+  document
+  .getElementById(ANSWERS_LIST_ID)
+  .addEventListener('click', saveAnswer);
+
 };
 
-const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+
+
+let currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 let userAnswers = [];
 
+console.log(userAnswers);
+let score = 0;
+const timeValue = 15;
+let counter;
+
 const nextQuestion = () => {
-    quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
-    initQuestionPage();
+  quizData.currentQuestionIndex++;
+  currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+  initQuestionPage();
+  startTimer(timeValue);
+
 };
 
 //Checks if selected answer is correct
 const checkAnswer = (evt) => {
-    const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
-    const targetValue = evt.target.value;
 
-    if (targetValue === currentQuestion.correct) {
-        answerIsCorrect();
-    } else {
-        answerIsWrong();
-        showCorrectAnswer();
-    }
-    //if answer is correct
-    function answerIsCorrect() {
-        quizData.score++;
-        evt.target.style.backgroundColor = "green";
-        alert(`Correct! Your current score is ${score}`);
-    }
-    //if answer is wrong
-    function answerIsWrong() {
-        quizData.score;
-        evt.target.style.backgroundColor = "red";
-        alert(`You will get it right next time! Your current score is ${score}`);
-        alert(`The correct answer is ${currentQuestion.correct}`);
-    }
+  const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 
-    function showCorrectAnswer() {
-        ANSWERS_LIST_ID.forEach(x => {
-            if (x.value !== currentQuestion.correct) {
-                x.style.backgroundColor = "red";
-            } else {
-                x.style.backgroundColor = "green";
-            }
-        });
-    }
+  const value = evt.target.value;
+  const ull = document.getElementById(ANSWERS_LIST_ID);
+  ull.style.pointerEvents = 'none';
+  document.getElementById(NEXT_QUESTION_BUTTON_ID).style.visibility = 'visible';
+
+  clearInterval(counter);
+  
+  userAnswers.push(value);
+ 
+   if (value === currentQuestion.correct) {
+     answerIsCorrect();
+   } else {
+     answerIsWrong();
+   }
+  
+ //if answer is correct
+ function answerIsCorrect() {
+  quizData.score++;
+  evt.target.style.backgroundColor = "green";
+
+}
+
+//if answer is wrong
+function answerIsWrong() {
+    quizData.score;
+    evt.target.style.backgroundColor = "red";
+    showCorrectAnswer();
+    
+  }
+}
+
+// Always shows the correct answers 
+const showCorrectAnswer = () => {
+  const buttons = document.querySelectorAll('button')
+    
+    buttons.forEach(button => {
+      if (button.value === currentQuestion.correct){
+        button.style.backgroundColor = "green";
+      }
+    })
 }
 
 
 //saves user's selected answers 
-const saveAnswer = (e) => {
-    const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
-    const value = e.target.value;
-    const answerObj = {
-        'Question': quizData.currentQuestionIndex + 1,
-        'Answer': value
-    }
-    userAnswers.push(answerObj);
-    console.log(userAnswers);
 
-    //saves answers on window reload
-    localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+const saveAnswer = (e) => {
+  const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+  const value = e.target.value;
+  const answerObj = {
+    'Question': quizData.currentQuestionIndex + 1,
+    'Answer' : value
+  }
+ userAnswers.push(answerObj);
+
+ //saves answers on window reload
+ localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+
 }
 
 //retrieves user's answers on page reload
 window.onload = function() {
-    if (localStorage.getItem('userAnswers')) {
-        userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
-    }
 
-
-
+  if (localStorage.getItem('userAnswers')) {
+    userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
+   }
 }
+ 
+ 
+// Timer
+
+export function startTimer(time) {
+  
+  counter = setInterval(timer, 1000);
+  function timer() {
+    const timeCount = document.querySelector('#timeCount')
+    timeCount.textContent = time; 
+    time--; 
+
+    if (time < 9) {
+      
+      let addZero = timeCount.textContent;
+      timeCount.textContent = '0' + addZero; 
+    }
+    if (time < 0) {
+      
+      clearInterval(counter); 
+      timeCount.textContent = 'Time Off'; 
+      showCorrectAnswer();
+      document.getElementById(NEXT_QUESTION_BUTTON_ID).style.visibility = 'visible';
+
+      const ull = document.getElementById(ANSWERS_LIST_ID);
+      ull.style.pointerEvents = 'none';
+    }
+  }
+}
+
