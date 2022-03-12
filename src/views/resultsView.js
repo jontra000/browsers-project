@@ -23,12 +23,17 @@ export const showResults = () => {
 
   element.innerHTML = String.raw`
     <h1 id="title"> The Result of the Quiz  <h1>
-    <h5> You have answered ${score} / 10 questions as true </h5>
+    <hr>
+    <h5> You have answered <span> ${score} / 10</span> questions as true </h5>
+    <h5> And totally you have got <span> ${score * 10}</span> points </h5>
+    <hr>
     <h5> Your answers are: </h5> 
     <p> ${selectedAnswers.join('-')} <p/>
-    
+    <hr>
     <h5> Correct answers are: </h5> 
     <p> ${answers.join('-')} <p/>
+    <hr>
+    <button id="restart"><span> RESTART QUIZ </span></button>
   `;
   return element;
 };

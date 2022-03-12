@@ -32,7 +32,6 @@ export const initQuestionPage = () => {
     .getElementById(NEXT_QUESTION_BUTTON_ID)
     .addEventListener('click', nextQuestion);
   
-
  //adding event listener on click to check answer
 
  document
@@ -45,10 +44,10 @@ export const initQuestionPage = () => {
   .getElementById(ANSWERS_LIST_ID)
   .addEventListener('click', saveAnswer);
 
+  //adding event listener on click to skip question
   document
   .getElementById(SKIP_QUESTION_BUTTON_ID)
   .addEventListener('click', skipQuestion);
-
 };
 
 
@@ -62,7 +61,6 @@ let counter;
 
 const nextQuestion = () => {
   quizData.currentQuestionIndex++;
-  // console.log(quizData.currentQuestionIndex)
   if (quizData.currentQuestionIndex < quizData.questions.length){
     currentQuestion = quizData.questions[quizData.currentQuestionIndex];
     initQuestionPage();
@@ -70,7 +68,8 @@ const nextQuestion = () => {
   
   }else{
     showResultPage();
-    console.log('The questions finished')
+    console.log('The questions finished');
+    document.getElementById(NEXT_QUESTION_BUTTON_ID).style.disabled = 'disabled';
   }
 };
 
@@ -84,8 +83,15 @@ const showResultPage = () => {
   resultBox.classList.add('activeResult');
   const result = showResults();
   resultBox.appendChild(result);
-  // resultBox.innerHTML = String.row`<p>Hoe gaat het? Your score is ${score * 10} Points</p>`  
-  console.log('TADA');
+
+  document
+  .getElementById('restart')
+  .addEventListener('click', ()  => {
+    quizData.currentQuestionIndex = 0;
+    score = 0;
+    initQuestionPage();
+    document.querySelector('.result-box').remove('activeResult')
+  });
 }
 
 //Checks if selected answer is correct
@@ -110,7 +116,7 @@ const checkAnswer = (evt) => {
 function answerIsCorrect() {
   score++;
   selectedAnswer.style.backgroundColor = "green";
-  // alert(`Correct! Your current score is ${score}`);
+  
 }
 
 //if answer is wrong
@@ -118,7 +124,6 @@ function answerIsWrong() {
   score;
   selectedAnswer.style.backgroundColor = "#DE4C28";
   showCorrectAnswer();
-  // alert(`You will get it right next time! Your current score is ${score}`);
   }
 }
 
@@ -214,25 +219,20 @@ export function startTimer(time) {
     time--; 
 
     if (time < 9) {
-      
       let addZero = timeCount.textContent;
       timeCount.textContent = '0' + addZero; 
     }
-
     if (time < 5){
       timeCount.style.color = 'red';
     }
-
     if (time < 0) {
-      
       clearInterval(counter); 
       timeCount.textContent = 'Time Off'; 
       showCorrectAnswer();
       document.getElementById(NEXT_QUESTION_BUTTON_ID).style.visibility = 'visible';
       document.getElementById(SKIP_QUESTION_BUTTON_ID).style.display = 'none';
-
-      const ull = document.getElementById(ANSWERS_LIST_ID);
-      ull.style.pointerEvents = 'none';
+      document.getElementById(ANSWERS_LIST_ID).style.pointerEvents;
+      
     }
   }
 }
