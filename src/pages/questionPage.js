@@ -1,32 +1,48 @@
 'use strict';
 
 import {
+
   ANSWERS_LIST_ID,
   NEXT_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
   SKIP_QUESTION_BUTTON_ID,
+
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { showResults } from '../views/resultsView.js';
 import { quizData } from '../data.js';
+import { SHOW_SCORE_ID } from "../constants.js";
+
 
 export const initQuestionPage = () => {
   
-  const userInterface = document.getElementById(USER_INTERFACE_ID);
-  userInterface.innerHTML = '';
+    const userInterface = document.getElementById(USER_INTERFACE_ID);
+    userInterface.innerHTML = '';
 
-  const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+    const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 
-  const questionElement = createQuestionElement(currentQuestion.text);
-  userInterface.appendChild(questionElement);
+    const questionElement = createQuestionElement(currentQuestion.text);
+    userInterface.appendChild(questionElement);
 
-  const answersListElement = document.getElementById(ANSWERS_LIST_ID);
+    const showScore = (correctAnswers, totalQuestions) => {
+        const scoreElement = document.createElement("p");
+        scoreElement.setAttribute("id", SHOW_SCORE_ID);
+        scoreElement.innerHTML = String.raw ` <p class="score-box"> ${correctAnswers} / ${totalQuestions}</p> `;
+        return scoreElement;
+    };
 
-  for (const [key, answerText] of Object.entries(currentQuestion.answers)) {
-    const answerElement = createAnswerElement(key, answerText);
-    answersListElement.appendChild(answerElement);
-  }
+    const currentScore = showScore(quizData.score, quizData.questions.length);
+    userInterface.appendChild(currentScore);
+
+
+    const answersListElement = document.getElementById(ANSWERS_LIST_ID);
+
+    for (const [key, answerText] of Object.entries(currentQuestion.answers)) {
+        const answerElement = createAnswerElement(key, answerText);
+        answerElement.setAttribute('data-key', key)
+        answersListElement.appendChild(answerElement);
+    };
 
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
@@ -45,9 +61,11 @@ export const initQuestionPage = () => {
   .getElementById(ANSWERS_LIST_ID)
   .addEventListener('click', saveAnswer);
 
+
   document
   .getElementById(SKIP_QUESTION_BUTTON_ID)
   .addEventListener('click', skipQuestion);
+
 
 };
 
@@ -55,14 +73,15 @@ export const initQuestionPage = () => {
 
 let currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 let userAnswers = [];
+
 export let selectedAnswers = [];
 export let score = 0;
+
 const timeValue = 15;
 let counter;
 
 const nextQuestion = () => {
   quizData.currentQuestionIndex++;
-  // console.log(quizData.currentQuestionIndex)
   if (quizData.currentQuestionIndex < quizData.questions.length){
     currentQuestion = quizData.questions[quizData.currentQuestionIndex];
     initQuestionPage();
@@ -90,6 +109,7 @@ const showResultPage = () => {
 
 //Checks if selected answer is correct
 const checkAnswer = (evt) => {
+
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
   const selectedAnswer = evt.target;
 
@@ -106,11 +126,12 @@ const checkAnswer = (evt) => {
      answerIsWrong();
    }
   
+
 //if answer is correct
 function answerIsCorrect() {
   score++;
   selectedAnswer.style.backgroundColor = "green";
-  // alert(`Correct! Your current score is ${score}`);
+  // alert(`Correct! Your current score is ${score}`)
 }
 
 //if answer is wrong
@@ -152,6 +173,7 @@ const saveAnswer = (e) => {
 
 //retrieves user's answers on page reload
 window.onload = function() {
+
   if (localStorage.getItem('selectedAnswers')) {
     const savedSelected = JSON.parse(localStorage.getItem('selectedAnswers'));
     // console.log(savedSelected);
@@ -162,47 +184,6 @@ window.onload = function() {
    }
 }
 
-
-
-//----------------------------------------------------------------------
-/*
-window.addEventListener("load", () => { 
-  displayUI(); 
-  updateMovieInfo(movieSelectBox.options[movieSelectBox.selectedIndex].value); 
-})
-
-const displayUI = () => { 
-    const selectedSeatsFromStorage = JSON.parse(localStorage.getItem('selectedSeats'));   
-    if(selectedSeatsFromStorage !== null && selectedSeatsFromStorage.length > 0){           
-        notOccupiedSeats.forEach((seat, index) => {                                            
-            if(selectedSeatsFromStorage.indexOf(index) !== -1){                             
-                seat.classList.add("selected");                                            
-            }
-        })  
-    }
-};
-
-
-
-const updateMovieInfo = (filmPrice) => {
- 
-  let selectedSeats = document.querySelectorAll('.row .selected');
-  let seatsIndexArray = [...selectedSeats].map(seat => [...notOccupiedSeats].indexOf(seat));
-  
-  localStorage.setItem('selectedSeats', JSON.stringify(seatsIndexArray)); 
-                                                                                                                                               
-  const selectedSeatCount = selectedSeats.length;
-  count.innerText = selectedSeatCount;
-
-  film.innerText = movieSelectBox.options[movieSelectBox.selectedIndex].innerText.split(' ($')[0]; 
-  total.innerText = selectedSeatCount * parseFloat(filmPrice);
-}
-
-*/
-//-------------------------------------------------------------------------
-
- 
- 
 // Timer
 
 export function startTimer(time) {
@@ -236,3 +217,4 @@ export function startTimer(time) {
     }
   }
 }
+
