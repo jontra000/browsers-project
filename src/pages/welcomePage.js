@@ -20,4 +20,3 @@ const startQuiz = () => {
   initQuestionPage();
 };
 
-//const userAnswersStorage = sessionStorage.getItem("userAnswer");
