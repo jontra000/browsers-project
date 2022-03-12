@@ -1,30 +1,46 @@
 'use strict';
 
 import {
-  ANSWERS_LIST_ID,
-  NEXT_QUESTION_BUTTON_ID,
-  USER_INTERFACE_ID,
+    ANSWERS_LIST_ID,
+    NEXT_QUESTION_BUTTON_ID,
+    USER_INTERFACE_ID,
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { quizData } from '../data.js';
+import { SHOW_SCORE_ID } from "../constants.js";
 
-export const initQuestionPage = () => {
-  const userInterface = document.getElementById(USER_INTERFACE_ID);
-  userInterface.innerHTML = '';
+export const initQuestionPage = (userInterface) => {
 
-  const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 
-  const questionElement = createQuestionElement(currentQuestion.text);
+    userInterface = document.getElementById(USER_INTERFACE_ID);
+    userInterface.innerHTML = '';
 
-  userInterface.appendChild(questionElement);
+    const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 
-  const answersListElement = document.getElementById(ANSWERS_LIST_ID);
+    const questionElement = createQuestionElement(currentQuestion.text);
 
-  for (const [key, answerText] of Object.entries(currentQuestion.answers)) {
-    const answerElement = createAnswerElement(key, answerText);
-    answersListElement.appendChild(answerElement);
-  }
+    userInterface.appendChild(questionElement);
+
+
+    const showScore = (correctAnswers, totalQuestions) => {
+        const scoreElement = document.createElement("p");
+        scoreElement.setAttribute("id", SHOW_SCORE_ID);
+        scoreElement.innerHTML = String.raw ` <p class="score-box"> ${correctAnswers} / ${totalQuestions}</p> `;
+        return scoreElement;
+    };
+
+    const currentScore = showScore(quizData.score, quizData.questions.length);
+    userInterface.appendChild(currentScore);
+
+
+    const answersListElement = document.getElementById(ANSWERS_LIST_ID);
+
+    for (const [key, answerText] of Object.entries(currentQuestion.answers)) {
+        const answerElement = createAnswerElement(key, answerText);
+        answerElement.setAttribute('data-key', key)
+        answersListElement.appendChild(answerElement);
+    };
 
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
@@ -42,12 +58,14 @@ export const initQuestionPage = () => {
   document
   .getElementById(ANSWERS_LIST_ID)
   .addEventListener('click', saveAnswer);
+
 };
 
 
 
 let currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 let userAnswers = [];
+
 console.log(userAnswers);
 let score = 0;
 const timeValue = 15;
@@ -58,10 +76,12 @@ const nextQuestion = () => {
   currentQuestion = quizData.questions[quizData.currentQuestionIndex];
   initQuestionPage();
   startTimer(timeValue);
+
 };
 
 //Checks if selected answer is correct
 const checkAnswer = (evt) => {
+
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 
   const value = evt.target.value;
@@ -81,19 +101,17 @@ const checkAnswer = (evt) => {
   
  //if answer is correct
  function answerIsCorrect() {
-  score++;
+  quizData.score++;
   evt.target.style.backgroundColor = "green";
 
-  
-  // alert(`Correct! Your current score is ${score}`);
 }
 
 //if answer is wrong
 function answerIsWrong() {
-    score;
+    quizData.score;
     evt.target.style.backgroundColor = "red";
     showCorrectAnswer();
-    // alert(`You will get it right next time! Your current score is ${score}`);
+    
   }
 }
 
@@ -127,6 +145,7 @@ const saveAnswer = (e) => {
 
 //retrieves user's answers on page reload
 window.onload = function() {
+
   if (localStorage.getItem('userAnswers')) {
     userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
    }
@@ -160,3 +179,4 @@ export function startTimer(time) {
     }
   }
 }
+
