@@ -3,7 +3,7 @@
 
 *, *::before, *::after {
   box-sizing: border-box;
-  font-family: /*'Monoton'*/"Shojumaru";
+  font-family: 'Shojumaru';
   color: white;
 }
 
@@ -15,28 +15,68 @@ body {
   align-items: center;
   height : 100vh;
   width: 100vw;
-  background-color: black;
+  background-color: rgb(167, 162, 162);
 }
 
 #user-interface {
   max-width: 100%;
-  background-color: rgb(48, 47, 48);
+  max-height: 95%;
+  background-color: rgb(136, 134, 134);
   border-radius: 2%;
-  padding: 10%;
-  box-shadow: 0 0 10px 2px;
+  padding: 10px;
+  box-shadow: 0 0 10px 2px black;
 }
 
-#start-quiz-button {
-  border: 1% solid white;
-  background-color: black;
-  color: white;
-  border-radius: 10%;
-  display: block;
-  width: 100%;
+#score{
+  width: 150px;
+  height: 10px;
+  margin: auto;
+  color: green;
 }
 
-#start-quiz-button:hover {
-  transform: scale(1.5); 
+#start-quiz-button{
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 120%);
+    font-size: 16px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #fff;
+    border: 2px solid #262626;
+    padding: 10px;
+    overflow: hidden;
+    cursor: pointer;
+}
+#start-quiz-button:hover{
+  cursor: pointer;
+}
+
+#start-quiz-button:before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(64, 84, 94);
+    transition: all 0.3s ease-in-out;
+    z-index: -1;
+    
+}
+#start-quiz-button:hover:before{
+    left: 0;
+}
+span{
+    color: #262626;
+    transition: all 0.5s ease-in-out;
+    z-index: 1;
+}
+#start-quiz-button:hover span{
+    color: #fff;
 }
 
 .info_box.activeInfo{
@@ -48,7 +88,7 @@ body {
 
 .info_box{
     width: 540px;
-    background: #fff;
+    background: rgb(226, 221, 221);
     border-radius: 5px;
     transform: translate(-50%, -50%) scale(0.9);
     opacity: 0;
@@ -57,8 +97,7 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    /* transform: translate(-50%, -50%); */
-    color: aqua;
+    color: black;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 
               0 6px 20px 0 rgba(0, 0, 0, 0.19);
     
@@ -66,8 +105,8 @@ body {
 .info_box .info-title{
     height: 60px;
     width: 100%;
-    border: 1px solid red;
-    /* border-bottom: 1px solid lightgrey; */
+    /* border: 1px solid red; */
+    border-bottom: 1px solid rgb(19, 20, 20);
     display: flex;
     align-items: center;
     padding: 0 30px;
@@ -85,11 +124,11 @@ body {
 .info_box .info-list .info{
     margin: 5px 0;
     font-size: 17px;
-    color: aqua;
+    color: black;
 }
 .info_box .info-list .info span{
     font-weight: 600;
-    color: #007bff;
+    color: #da4c28;
 }
 .info_box .buttons{
     height: 60px;
@@ -97,7 +136,7 @@ body {
     align-items: center;
     justify-content: flex-end;
     padding: 0 30px;
-    border-top: 1px solid lightgrey;
+    border-top: 1px solid rgb(56, 59, 59);
 }
 .info_box .buttons button{
     margin: 0 5px;
@@ -110,51 +149,117 @@ body {
     border: none;
     outline: none;
     border-radius: 5px;
-    border: 1px solid #007bff;
+    border: 1px solid #252627;
     transition: all 0.3s ease;
 }
 
 #answers-list {
   display: grid;
   gap: 10%;
-  margin: 10%;
+  margin: 0;
   padding: 10%;
 }
 
 .answerBtn {
   display: block;
-  width: 100%;
-  border: 1% solid white;
-  background-color: black;
-  border-radius: 10%;;
+  padding: 10px;
+  width: 75%;
+  margin: 0 auto;
+  border: none;
+  background-color: rgb(78, 79, 80);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
 
 .answerBtn:hover {
-  transform: scale(1.5); 
+  transform: scale(1.05); 
+  background-color: rgb(56, 57, 58);
 }
   
   #next-question-button {
   display: block;
-  width: 100%;
-  border: 1% solid white;
-  background-color: black;
-  border-radius: 10%;
+  width: 30%;
+  border: none;
+  background-color: rgb(48, 55, 95);
+  border-radius: 10px;
+  padding: 10px;
   color: white;
   visibility: hidden;
-  
-#next-question-button:hover {
-  transform: scale(1.5); 
+  margin: auto;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-.centered {
-  position: fixed;
+#next-question-button:hover {
+  transform: scale(1.1); 
+}
+
+.timeDiv{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+#time-left{
+  width: 10rem;
+  margin: 30px auto;
+  font-size: 20px;
+  text-decoration: underline;
+
+}
+#timeCount{
+  font-size: 2.5rem;
+}
+
+#displayUI{
+  margin: 0;
+}
+
+/*---------*/
+
+.result-box{
+  width: 400px;
+  height: 400px;
+  background: rgb(226, 221, 221);
+  border-radius: 5px;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-
-ul {
-  list-style: none;
-  display: flex;
+  color: black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 
+              0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 50px;
+  padding: 50px;
 }
+
+.result-box.activeResult{
+  opacity: 1;
+  z-index: 5;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+#skip-question-button{
+  display: block;
+  width: 30%;
+  border: none;
+  background-color: rgb(48, 55, 95);
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+  margin: auto;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+
 
 

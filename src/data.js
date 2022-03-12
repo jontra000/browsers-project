@@ -13,119 +13,120 @@
 
 export const quizData = {
 
-    currentQuestionIndex: 0,
-    score: 0,
-    // the questions in the quiz
-    questions: [{
-            text: 'What does "HOND" mean in ENGLISH?',
-            answers: {
-                a: 'CAT',
-                b: 'DOG',
-                c: 'BIRD',
-                d: 'GIRAFFE',
-            },
-            correct: 'b',
-            selected: null,
-        },
-        {
-            text: 'What does "TURTLE" mean in DUTCH?',
-            answers: {
-                a: 'NEUSHOORN',
-                b: 'VOGEL',
-                c: 'PAARD',
-                d: 'SCHILDPAD',
-            },
-            correct: 'd',
-            selected: null,
-        },
-        {
-            text: 'What does "DOCHTER" mean in ENGLISH?',
-            answers: {
-                a: 'SISTER',
-                b: 'FATHER',
-                c: 'DAUGHTER',
-                d: 'SON',
-            },
-            correct: 'c',
-            selected: null,
-        },
-        {
-            text: 'What does "SISTER" mean in DUTCH?',
-            answers: {
-                a: 'BROER',
-                b: 'ZUS',
-                c: 'NICHT',
-                d: 'TANTE',
-            },
-            correct: 'b',
-            selected: null,
-        },
-        {
-            text: 'What does "NEEF" mean in ENGLISH?',
-            answers: {
-                a: 'FATHER',
-                b: 'NEPHEW',
-                c: 'UNCLE',
-                d: 'BROTHER',
-            },
-            correct: 'b',
-            selected: null,
-        },
-        {
-            text: 'What does "MARRIED" mean in DUTCH?',
-            answers: {
-                a: 'BRUID',
-                b: 'WEDUWE',
-                c: 'ALLEEN',
-                d: 'GETROUWD',
-            },
-            correct: 'd',
-            selected: null,
-        },
-        {
-            text: 'What does "BROEK" mean in ENGLISH?',
-            answers: {
-                a: 'DRESS',
-                b: 'PANTS',
-                c: 'SKIRTS',
-                d: 'SWEATSHIRT',
-            },
-            correct: 'b',
-            selected: null,
-        },
-        {
-            text: 'What does "SHOE" mean in DUTCH?',
-            answers: {
-                a: 'ROK',
-                b: 'HOED',
-                c: 'SCHOEN',
-                d: 'ONDERGOED',
-            },
-            correct: 'c',
-            selected: null,
-        },
-        {
-            text: 'What does "ZWART" mean in ENGLISH?',
-            answers: {
-                a: 'BLACK',
-                b: 'BLUE',
-                c: 'PINK',
-                d: 'YELLOW',
-            },
-            correct: 'a',
-            selected: null,
-        },
-        {
-            text: 'What does "GREEN" mean in DUTCH?',
-            answers: {
-                a: 'ROOD',
-                b: 'ORANJE',
-                c: 'PAARS',
-                d: 'GROEN',
-            },
-            correct: 'd',
-            selected: null,
-        },
-
-    ],
+  currentQuestionIndex: 0,
+  // the questions in the quiz
+  questions: [
+    {
+      text: 'What does "HOND" mean in ENGLISH?',
+      answers: {
+        A: 'CAT',
+        B: 'DOG',
+        C: 'BIRD',
+        D: 'GIRAFFE',
+      },
+      correct: 'B',
+      selected: null,
+    },
+    {
+      text: 'What does "TURTLE" mean in DUTCH?',
+      answers: {
+        A: 'NEUSHOORN',
+        B: 'VOGEL',
+        C: 'PAARD',
+        D: 'SCHILDPAD',
+      },
+      correct: 'D',
+      selected: null,
+    },
+    {
+      text: 'What does "DOCHTER" mean in ENGLISH?',
+      answers: {
+        A: 'SISTER',
+        B: 'FATHER',
+        C: 'DAUGHTER',
+        D: 'SON',
+      },
+      correct: 'C',
+      selected: null,
+    },
+    {
+      text: 'What does "SISTER" mean in DUTCH?',
+      answers: {
+        A: 'BROER',
+        B: 'ZUS',
+        C: 'NICHT',
+        D: 'TANTE',
+      },
+      correct: 'B',
+      selected: null,
+    },
+    {
+      text: 'What does "NEEF" mean in ENGLISH?',
+      answers: {
+        A: 'FATHER',
+        B: 'NEPHEW',
+        C: 'UNCLE',
+        D: 'BROTHER',
+      },
+      correct: 'B',
+      selected: null,
+    },
+    {
+      text: 'What does "MARRIED" mean in DUTCH?',
+      answers: {
+        A: 'BRUID',
+        B: 'WEDUWE',
+        C: 'ALLEEN',
+        D: 'GETROUWD',
+      },
+      correct: 'D',
+      selected: null,
+    },
+    {
+      text: 'What does "BROEK" mean in ENGLISH?',
+      answers: {
+        A: 'DRESS',
+        B: 'PANTS',
+        C: 'SKIRTS',
+        D: 'SWEATSHIRT',
+      },
+      correct: 'B',
+      selected: null,
+    },
+    {
+      text: 'What does "SHOE" mean in DUTCH?',
+      answers: {
+        A: 'ROK',
+        B: 'HOED',
+        C: 'SCHOEN',
+        D: 'ONDERGOED',
+      },
+      correct: 'C',
+      selected: null,
+    },
+    {
+      text: 'What does "ZWART" mean in ENGLISH?',
+      answers: {
+        A: 'BLACK',
+        B: 'BLUE',
+        C: 'PINK',
+        D: 'YELLOW',
+      },
+      correct: 'A',
+      selected: null,
+    },
+    {
+      text: 'What does "GREEN" mean in DUTCH?',
+      answers: {
+        A: 'ROOD',
+        B: 'ORANJE',
+        C: 'PAARS',
+        D: 'GROEN',
+      },
+      correct: 'D',
+      selected: null,
+    },
+    
+  ],
 };
+
