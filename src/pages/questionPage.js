@@ -1,37 +1,54 @@
 'use strict';
 
 import {
+
   ANSWERS_LIST_ID,
   NEXT_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
   SKIP_QUESTION_BUTTON_ID,
+
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { showResults } from '../views/resultsView.js';
 import { quizData } from '../data.js';
+import { SHOW_SCORE_ID } from "../constants.js";
+
 
 export const initQuestionPage = () => {
   
-  const userInterface = document.getElementById(USER_INTERFACE_ID);
-  userInterface.innerHTML = '';
+    const userInterface = document.getElementById(USER_INTERFACE_ID);
+    userInterface.innerHTML = '';
 
-  const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+    const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 
-  const questionElement = createQuestionElement(currentQuestion.text);
-  userInterface.appendChild(questionElement);
+    const questionElement = createQuestionElement(currentQuestion.text);
+    userInterface.appendChild(questionElement);
 
-  const answersListElement = document.getElementById(ANSWERS_LIST_ID);
+    const showScore = (correctAnswers, totalQuestions) => {
+        const scoreElement = document.createElement("p");
+        scoreElement.setAttribute("id", SHOW_SCORE_ID);
+        scoreElement.innerHTML = String.raw ` <p class="score-box"> ${correctAnswers} / ${totalQuestions}</p> `;
+        return scoreElement;
+    };
 
-  for (const [key, answerText] of Object.entries(currentQuestion.answers)) {
-    const answerElement = createAnswerElement(key, answerText);
-    answersListElement.appendChild(answerElement);
-  }
+    const currentScore = showScore(quizData.score, quizData.questions.length);
+    userInterface.appendChild(currentScore);
+
+
+    const answersListElement = document.getElementById(ANSWERS_LIST_ID);
+
+    for (const [key, answerText] of Object.entries(currentQuestion.answers)) {
+        const answerElement = createAnswerElement(key, answerText);
+        answerElement.setAttribute('data-key', key)
+        answersListElement.appendChild(answerElement);
+    };
 
   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
     .addEventListener('click', nextQuestion);
   
+
  //adding event listener on click to check answer
 
  document
@@ -44,18 +61,22 @@ export const initQuestionPage = () => {
   .getElementById(ANSWERS_LIST_ID)
   .addEventListener('click', saveAnswer);
 
-  //adding event listener on click to skip question
+
   document
   .getElementById(SKIP_QUESTION_BUTTON_ID)
   .addEventListener('click', skipQuestion);
+
+
 };
 
 
 
 let currentQuestion = quizData.questions[quizData.currentQuestionIndex];
 let userAnswers = [];
+
 export let selectedAnswers = [];
 export let score = 0;
+
 const timeValue = 15;
 let counter;
 
@@ -68,8 +89,7 @@ const nextQuestion = () => {
   
   }else{
     showResultPage();
-    console.log('The questions finished');
-    document.getElementById(NEXT_QUESTION_BUTTON_ID).style.disabled = 'disabled';
+    console.log('The questions finished')
   }
 };
 
@@ -83,19 +103,13 @@ const showResultPage = () => {
   resultBox.classList.add('activeResult');
   const result = showResults();
   resultBox.appendChild(result);
-
-  document
-  .getElementById('restart')
-  .addEventListener('click', ()  => {
-    quizData.currentQuestionIndex = 0;
-    score = 0;
-    initQuestionPage();
-    document.querySelector('.result-box').remove('activeResult')
-  });
+  // resultBox.innerHTML = String.row`<p>Hoe gaat het? Your score is ${score * 10} Points</p>`  
+  console.log('TADA');
 }
 
 //Checks if selected answer is correct
 const checkAnswer = (evt) => {
+
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
   const selectedAnswer = evt.target;
 
@@ -112,11 +126,12 @@ const checkAnswer = (evt) => {
      answerIsWrong();
    }
   
+
 //if answer is correct
 function answerIsCorrect() {
   score++;
   selectedAnswer.style.backgroundColor = "green";
-  
+  // alert(`Correct! Your current score is ${score}`)
 }
 
 //if answer is wrong
@@ -124,6 +139,7 @@ function answerIsWrong() {
   score;
   selectedAnswer.style.backgroundColor = "#DE4C28";
   showCorrectAnswer();
+  // alert(`You will get it right next time! Your current score is ${score}`);
   }
 }
 
@@ -157,6 +173,7 @@ const saveAnswer = (e) => {
 
 //retrieves user's answers on page reload
 window.onload = function() {
+
   if (localStorage.getItem('selectedAnswers')) {
     const savedSelected = JSON.parse(localStorage.getItem('selectedAnswers'));
     // console.log(savedSelected);
@@ -167,47 +184,6 @@ window.onload = function() {
    }
 }
 
-
-
-//----------------------------------------------------------------------
-/*
-window.addEventListener("load", () => { 
-  displayUI(); 
-  updateMovieInfo(movieSelectBox.options[movieSelectBox.selectedIndex].value); 
-})
-
-const displayUI = () => { 
-    const selectedSeatsFromStorage = JSON.parse(localStorage.getItem('selectedSeats'));   
-    if(selectedSeatsFromStorage !== null && selectedSeatsFromStorage.length > 0){           
-        notOccupiedSeats.forEach((seat, index) => {                                            
-            if(selectedSeatsFromStorage.indexOf(index) !== -1){                             
-                seat.classList.add("selected");                                            
-            }
-        })  
-    }
-};
-
-
-
-const updateMovieInfo = (filmPrice) => {
- 
-  let selectedSeats = document.querySelectorAll('.row .selected');
-  let seatsIndexArray = [...selectedSeats].map(seat => [...notOccupiedSeats].indexOf(seat));
-  
-  localStorage.setItem('selectedSeats', JSON.stringify(seatsIndexArray)); 
-                                                                                                                                               
-  const selectedSeatCount = selectedSeats.length;
-  count.innerText = selectedSeatCount;
-
-  film.innerText = movieSelectBox.options[movieSelectBox.selectedIndex].innerText.split(' ($')[0]; 
-  total.innerText = selectedSeatCount * parseFloat(filmPrice);
-}
-
-*/
-//-------------------------------------------------------------------------
-
- 
- 
 // Timer
 
 export function startTimer(time) {
@@ -219,20 +195,26 @@ export function startTimer(time) {
     time--; 
 
     if (time < 9) {
+      
       let addZero = timeCount.textContent;
       timeCount.textContent = '0' + addZero; 
     }
+
     if (time < 5){
       timeCount.style.color = 'red';
     }
+
     if (time < 0) {
+      
       clearInterval(counter); 
       timeCount.textContent = 'Time Off'; 
       showCorrectAnswer();
       document.getElementById(NEXT_QUESTION_BUTTON_ID).style.visibility = 'visible';
       document.getElementById(SKIP_QUESTION_BUTTON_ID).style.display = 'none';
-      document.getElementById(ANSWERS_LIST_ID).style.pointerEvents;
-      
+
+      const ull = document.getElementById(ANSWERS_LIST_ID);
+      ull.style.pointerEvents = 'none';
     }
   }
 }
+

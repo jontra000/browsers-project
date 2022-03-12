@@ -222,8 +222,8 @@ span{
 
 .result-box{
   width: 400px;
-  height: 550px;
-  background: rgb(102, 99, 99);
+  height: 400px;
+  background: rgb(226, 221, 221);
   border-radius: 5px;
   transform: translate(-50%, -50%) scale(0.9);
   opacity: 0;
@@ -236,7 +236,7 @@ span{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 
               0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 50px;
-  padding: 30px;
+  padding: 50px;
 }
 
 .result-box.activeResult{
@@ -244,13 +244,6 @@ span{
   z-index: 5;
   pointer-events: auto;
   transform: translate(-50%, -50%) scale(1);
-}
-
-h5 span{
-  color: blue;
-  background-color: rgb(177, 167, 167);
-  padding: 5px;
-  border-radius: 10px;
 }
 
 #skip-question-button{
@@ -265,24 +258,6 @@ h5 span{
   text-transform: uppercase;
   transition: all 0.3s ease;
   cursor: pointer;
-}
-
-#restart{
-  display: block;
-  width: 30%;
-  border: none;
-  background-color: rgb(48, 55, 95);
-  border-radius: 10px;
-  padding: 10px;
-  color: white;
-  margin: auto;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-#restart span{
-  color: white;
 }
 
 
