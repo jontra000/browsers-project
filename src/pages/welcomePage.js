@@ -24,7 +24,6 @@ const startQuiz = () => {
   info_box.classList.add('activeInfo');    
 };
 
-
 exit_btn.addEventListener('click', () => {
   info_box.classList.remove('activeInfo');    
 });
