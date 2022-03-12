@@ -30,16 +30,20 @@ export const initQuestionPage = () => {
     .getElementById(NEXT_QUESTION_BUTTON_ID)
     .addEventListener('click', nextQuestion);
   
- //adding event listener on click
+
+ //adding event listener on click to check answer
+
  document
  .getElementById(ANSWERS_LIST_ID)
  .addEventListener('click', checkAnswer);
 
  //adding event listener on click to save selected answer
+
   document
   .getElementById(ANSWERS_LIST_ID)
   .addEventListener('click', saveAnswer);
 };
+
 
 
 let currentQuestion = quizData.questions[quizData.currentQuestionIndex];
@@ -51,10 +55,7 @@ let counter;
 
 const nextQuestion = () => {
   quizData.currentQuestionIndex++;
-  // console.log(currentQuestionIndex);
   currentQuestion = quizData.questions[quizData.currentQuestionIndex];
-  console.log(currentQuestion);
-
   initQuestionPage();
   startTimer(timeValue);
 };
@@ -62,6 +63,7 @@ const nextQuestion = () => {
 //Checks if selected answer is correct
 const checkAnswer = (evt) => {
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+
   const value = evt.target.value;
   const ull = document.getElementById(ANSWERS_LIST_ID);
   ull.style.pointerEvents = 'none';
@@ -76,10 +78,12 @@ const checkAnswer = (evt) => {
    } else {
      answerIsWrong();
    }
-   //if answer is correct
+  
+ //if answer is correct
  function answerIsCorrect() {
   score++;
   evt.target.style.backgroundColor = "green";
+
   
   // alert(`Correct! Your current score is ${score}`);
 }
@@ -93,11 +97,10 @@ function answerIsWrong() {
   }
 }
 
+// Always shows the correct answers 
 const showCorrectAnswer = () => {
   const buttons = document.querySelectorAll('button')
-  // quizData.currentQuestionIndex++;
-  // console.log(currentQuestion);
-  
+    
     buttons.forEach(button => {
       if (button.value === currentQuestion.correct){
         button.style.backgroundColor = "green";
@@ -106,8 +109,8 @@ const showCorrectAnswer = () => {
 }
 
 
-
 //saves user's selected answers 
+
 const saveAnswer = (e) => {
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
   const value = e.target.value;
@@ -115,15 +118,19 @@ const saveAnswer = (e) => {
     'Question': quizData.currentQuestionIndex + 1,
     'Answer' : value
   }
-  userAnswers.push(answerObj);
-  localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+ userAnswers.push(answerObj);
+
+ //saves answers on window reload
+ localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+
 }
 
 //retrieves user's answers on page reload
 window.onload = function() {
   if (localStorage.getItem('userAnswers')) {
     userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
-}}
+   }
+}
  
  
 // Timer
@@ -153,7 +160,3 @@ export function startTimer(time) {
     }
   }
 }
-
-
-
-

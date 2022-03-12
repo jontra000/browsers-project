@@ -20,25 +20,18 @@ export const initWelcomePage = () => {
     .addEventListener('click', startQuiz);
 };
 
-// const startQuiz = () => {
-//   startTimer(15);
-//   initQuestionPage();
-  
-// };
-
 const startQuiz = () => {
-  info_box.classList.add('activeInfo');       // Show info box
-  
+  info_box.classList.add('activeInfo');    
 };
 
+
 exit_btn.addEventListener('click', () => {
-  info_box.classList.remove('activeInfo');    // Hide info box
+  info_box.classList.remove('activeInfo');    
 });
 
 continue_btn.addEventListener('click', () => {
-  info_box.classList.remove('activeInfo'); //hide info box
+  info_box.classList.remove('activeInfo');    
   startTimer(15);
   initQuestionPage();
-  // quiz_box.classList.add('activeQuiz'); //show quiz box
-  // showQuestions(0); //calling showQestions function (first question)
 });
+
