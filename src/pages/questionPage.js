@@ -25,28 +25,12 @@ export const initQuestionPage = (userInterface) => {
     const showScore = (correctAnswers, totalQuestions) => {
         const scoreElement = document.createElement("p");
         scoreElement.setAttribute("id", SHOW_SCORE_ID);
-        scoreElement.innerHTML = String.raw ` <p class="score-title"> ${correctAnswers} / ${totalQuestions}</p> `;
+        scoreElement.innerHTML = String.raw ` <p class="score-box"> ${correctAnswers} / ${totalQuestions}</p> `;
         return scoreElement;
     };
 
     const currentScore = showScore(quizData.score, quizData.questions.length);
     userInterface.appendChild(currentScore);
-
-
-    const selectAnswer = (e) => {
-        currentQuestion.selected = e.target.dataset.key;
-
-        if (currentQuestion.selected === currentQuestion.correct) {
-            e.target.classList.add('Correct');
-            e.target.style.backgroundColor = 'green';
-            quizData.score++;
-
-        } else {
-            e.target.classList.add('Wrong');
-            e.target.style.backgroundColor = 'red';
-        };
-
-    };
 
 
     const answersListElement = document.getElementById(ANSWERS_LIST_ID);
@@ -55,22 +39,89 @@ export const initQuestionPage = (userInterface) => {
         const answerElement = createAnswerElement(key, answerText);
         answerElement.setAttribute('data-key', key)
         answersListElement.appendChild(answerElement);
-
-        for (const selection of answersListElement.children) {
-            selection.addEventListener('click', selectAnswer);
-        }
-    }
-
+    };
 
     document
         .getElementById(NEXT_QUESTION_BUTTON_ID)
         .addEventListener('click', nextQuestion);
 
+    //adding event listener on click to check answer
+    document
+        .getElementById(ANSWERS_LIST_ID)
+        .addEventListener('click', checkAnswer);
+
+    //adding event listener on click to save selected answer
+    document
+        .getElementById(ANSWERS_LIST_ID)
+        .addEventListener('click', saveAnswer);
 };
 
-
+const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+let userAnswers = [];
 
 const nextQuestion = () => {
     quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
     initQuestionPage();
 };
+
+//Checks if selected answer is correct
+const checkAnswer = (evt) => {
+    const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+    const targetValue = evt.target.value;
+
+    if (targetValue === currentQuestion.correct) {
+        answerIsCorrect();
+    } else {
+        answerIsWrong();
+        showCorrectAnswer();
+    }
+    //if answer is correct
+    function answerIsCorrect() {
+        quizData.score++;
+        evt.target.style.backgroundColor = "green";
+        alert(`Correct! Your current score is ${score}`);
+    }
+    //if answer is wrong
+    function answerIsWrong() {
+        quizData.score;
+        evt.target.style.backgroundColor = "red";
+        alert(`You will get it right next time! Your current score is ${score}`);
+        alert(`The correct answer is ${currentQuestion.correct}`);
+    }
+
+    function showCorrectAnswer() {
+        ANSWERS_LIST_ID.forEach(x => {
+            if (x.value !== currentQuestion.correct) {
+                x.style.backgroundColor = "red";
+            } else {
+                x.style.backgroundColor = "green";
+            }
+        });
+    }
+}
+
+
+//saves user's selected answers 
+const saveAnswer = (e) => {
+    const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+    const value = e.target.value;
+    const answerObj = {
+        'Question': quizData.currentQuestionIndex + 1,
+        'Answer': value
+    }
+    userAnswers.push(answerObj);
+    console.log(userAnswers);
+
+    //saves answers on window reload
+    localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+}
+
+//retrieves user's answers on page reload
+window.onload = function() {
+    if (localStorage.getItem('userAnswers')) {
+        userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
+    }
+
+
+
+}
