@@ -6,17 +6,18 @@ import {
   NEXT_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
   SKIP_QUESTION_BUTTON_ID,
+  RESTART_QUIZ_BUTTON_ID,
 
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { showResults } from '../views/resultsView.js';
 import { quizData } from '../data.js';
-import { SHOW_SCORE_ID } from "../constants.js";
+//import { SHOW_SCORE_ID } from "../constants.js";
 
 
 export const initQuestionPage = () => {
-  
+
     const userInterface = document.getElementById(USER_INTERFACE_ID);
     userInterface.innerHTML = '';
 
@@ -25,7 +26,7 @@ export const initQuestionPage = () => {
     const questionElement = createQuestionElement(currentQuestion.text);
     userInterface.appendChild(questionElement);
 
-    const showScore = (correctAnswers, totalQuestions) => {
+   /* const showScore = (correctAnswers, totalQuestions) => {
         const scoreElement = document.createElement("p");
         scoreElement.setAttribute("id", SHOW_SCORE_ID);
         scoreElement.innerHTML = String.raw ` <p class="score-box"> ${correctAnswers} / ${totalQuestions}</p> `;
@@ -33,7 +34,7 @@ export const initQuestionPage = () => {
     };
 
     const currentScore = showScore(quizData.score, quizData.questions.length);
-    userInterface.appendChild(currentScore);
+    userInterface.appendChild(currentScore);*/
 
 
     const answersListElement = document.getElementById(ANSWERS_LIST_ID);
@@ -90,6 +91,7 @@ const nextQuestion = () => {
   }else{
     showResultPage();
     console.log('The questions finished')
+    document.getElementById(NEXT_QUESTION_BUTTON_ID).style.visibility = 'hidden';
   }
 };
 
@@ -103,6 +105,13 @@ const showResultPage = () => {
   resultBox.classList.add('activeResult');
   const result = showResults();
   resultBox.appendChild(result);
+  document.getElementById(RESTART_QUIZ_BUTTON_ID).addEventListener('click', () => {
+    quizData.currentQuestionIndex = 0;
+    initQuestionPage();
+    score = 0; 
+    resultBox.classList.remove('activeResult');
+    document.getElementById('score').innerHTML = String.raw `${score} points`;
+  });
   // resultBox.innerHTML = String.row`<p>Hoe gaat het? Your score is ${score * 10} Points</p>`  
   console.log('TADA');
 }
