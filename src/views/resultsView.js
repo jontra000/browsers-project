@@ -24,8 +24,8 @@ export const showResults = () => {
   element.innerHTML = String.raw`
     <h1 id="title"> The Result of the Quiz  <h1>
     <hr>
-    <h5> You have answered ${score} / 10 questions as true </h5>
-    <h5> You have got ${score * 10} points</h5>
+    <h5> You have answered <span> ${score} / 10 </span> questions as true </h5>
+    <h5> You have got <span> ${score * 10} </span>points</h5>
     <hr>
     <h5> Your answers are: </h5> 
     <p> ${selectedAnswers.join('-')} <p/>

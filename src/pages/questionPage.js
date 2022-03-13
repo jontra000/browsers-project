@@ -13,7 +13,6 @@ import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { showResults } from '../views/resultsView.js';
 import { quizData } from '../data.js';
-//import { SHOW_SCORE_ID } from "../constants.js";
 
 
 export const initQuestionPage = () => {
@@ -25,16 +24,6 @@ export const initQuestionPage = () => {
 
     const questionElement = createQuestionElement(currentQuestion.text);
     userInterface.appendChild(questionElement);
-
-   /* const showScore = (correctAnswers, totalQuestions) => {
-        const scoreElement = document.createElement("p");
-        scoreElement.setAttribute("id", SHOW_SCORE_ID);
-        scoreElement.innerHTML = String.raw ` <p class="score-box"> ${correctAnswers} / ${totalQuestions}</p> `;
-        return scoreElement;
-    };
-
-    const currentScore = showScore(quizData.score, quizData.questions.length);
-    userInterface.appendChild(currentScore);*/
 
 
     const answersListElement = document.getElementById(ANSWERS_LIST_ID);
@@ -62,6 +51,7 @@ export const initQuestionPage = () => {
   .getElementById(ANSWERS_LIST_ID)
   .addEventListener('click', saveAnswer);
 
+  //adding event listener on click to skip button
 
   document
   .getElementById(SKIP_QUESTION_BUTTON_ID)
@@ -90,16 +80,17 @@ const nextQuestion = () => {
   
   }else{
     showResultPage();
-    console.log('The questions finished')
     document.getElementById(NEXT_QUESTION_BUTTON_ID).style.visibility = 'hidden';
   }
 };
 
+//skips question
 const skipQuestion = () => {
   quizData.currentQuestionIndex++;
   initQuestionPage();
 }
 
+//shows result page on result view 
 const showResultPage = () => {
   const resultBox = document.querySelector('.result-box');
   resultBox.classList.add('activeResult');
@@ -112,8 +103,6 @@ const showResultPage = () => {
     resultBox.classList.remove('activeResult');
     document.getElementById('score').innerHTML = String.raw `${score} points`;
   });
-  // resultBox.innerHTML = String.row`<p>Hoe gaat het? Your score is ${score * 10} Points</p>`  
-  console.log('TADA');
 }
 
 //Checks if selected answer is correct
@@ -140,7 +129,6 @@ const checkAnswer = (evt) => {
 function answerIsCorrect() {
   score++;
   selectedAnswer.style.backgroundColor = "green";
-  // alert(`Correct! Your current score is ${score}`)
 }
 
 //if answer is wrong
@@ -148,7 +136,6 @@ function answerIsWrong() {
   score;
   selectedAnswer.style.backgroundColor = "#DE4C28";
   showCorrectAnswer();
-  // alert(`You will get it right next time! Your current score is ${score}`);
   }
 }
 
@@ -163,8 +150,7 @@ const showCorrectAnswer = () => {
     })
 }
 
-//saves user's selected answers 
-
+//saves user's selected answers
 const saveAnswer = (e) => {
   const selected = e.target;
   const answerObj = {
@@ -173,7 +159,6 @@ const saveAnswer = (e) => {
   }
  userAnswers.push(answerObj);
  selectedAnswers.push(selected.value);
- console.log(selectedAnswers);
 
  //saves answers on window reload
  localStorage.setItem("selectedAnswers", JSON.stringify(selectedAnswers));
@@ -185,16 +170,15 @@ window.onload = function() {
 
   if (localStorage.getItem('selectedAnswers')) {
     const savedSelected = JSON.parse(localStorage.getItem('selectedAnswers'));
-    // console.log(savedSelected);
+
     if (localStorage.getItem('userAnswers')) {
      const savedUserAnswers = JSON.parse(localStorage.getItem('userAnswers'));
-    //  console.log(savedUserAnswers);
+
      }
    }
 }
 
 // Timer
-
 export function startTimer(time) {
   
   counter = setInterval(timer, 1000);
