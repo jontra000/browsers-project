@@ -130,3 +130,6 @@ export const quizData = {
   ],
 };
 
+/*window.addEventListener('beforeunload', () => {
+  localStorage.setItem("quizData", JSON.stringify(quizData));
+} );*/

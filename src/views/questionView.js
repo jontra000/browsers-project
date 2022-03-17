@@ -38,3 +38,12 @@ export const createQuestionElement = (question) => {
 
   return element;
 };
+
+
+//retrieves user's answers on page reload
+window.onload = function() {
+
+  if (localStorage.getItem('selectedAnswers')) {
+    const savedSelected = JSON.parse(localStorage.getItem('selectedAnswers'));
+  }
+}
