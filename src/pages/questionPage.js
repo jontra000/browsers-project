@@ -6,13 +6,11 @@ import {
   NEXT_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
   SKIP_QUESTION_BUTTON_ID,
-  RESTART_QUIZ_BUTTON_ID,
-
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
-import { showResults } from '../views/resultsView.js';
 import { quizData } from '../data.js';
+import { showResultPage } from './resultsPage.js';
 
 
 export const initQuestionPage = () => {
@@ -45,25 +43,17 @@ export const initQuestionPage = () => {
  .getElementById(ANSWERS_LIST_ID)
  .addEventListener('click', checkAnswer);
 
- //adding event listener on click to save selected answer
-
-  document
-  .getElementById(ANSWERS_LIST_ID)
-  .addEventListener('click', saveAnswer);
 
   //adding event listener on click to skip button
 
   document
   .getElementById(SKIP_QUESTION_BUTTON_ID)
   .addEventListener('click', skipQuestion);
-
-
 };
 
 
 
 let currentQuestion = quizData.questions[quizData.currentQuestionIndex];
-let userAnswers = [];
 
 export let selectedAnswers = [];
 export let score = 0;
@@ -77,9 +67,8 @@ const nextQuestion = () => {
     currentQuestion = quizData.questions[quizData.currentQuestionIndex];
     initQuestionPage();
     startTimer(timeValue);
-  
   }else{
-    showResultPage();
+showResultPage;
     document.getElementById(NEXT_QUESTION_BUTTON_ID).style.visibility = 'hidden';
   }
 };
@@ -88,21 +77,9 @@ const nextQuestion = () => {
 const skipQuestion = () => {
   quizData.currentQuestionIndex++;
   initQuestionPage();
-}
-
-//shows result page on result view 
-const showResultPage = () => {
-  const resultBox = document.querySelector('.result-box');
-  resultBox.classList.add('activeResult');
-  const result = showResults();
-  resultBox.appendChild(result);
-  document.getElementById(RESTART_QUIZ_BUTTON_ID).addEventListener('click', () => {
-    quizData.currentQuestionIndex = 0;
-    initQuestionPage();
-    score = 0; 
-    resultBox.classList.remove('activeResult');
-    document.getElementById('score').innerHTML = String.raw `${score} points`;
-  });
+  clearInterval(counter); 
+  startTimer(timeValue);
+  selectedAnswers.push("()");
 }
 
 //Checks if selected answer is correct
@@ -110,13 +87,18 @@ const checkAnswer = (evt) => {
 
   const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
   const selectedAnswer = evt.target;
-
   const ull = document.getElementById(ANSWERS_LIST_ID);
   ull.style.pointerEvents = 'none';
   document.getElementById(NEXT_QUESTION_BUTTON_ID).style.visibility = 'visible';
   document.getElementById(SKIP_QUESTION_BUTTON_ID).style.display = 'none';
-
   clearInterval(counter);
+
+//saves user's selected answers
+  selectedAnswers.push(selectedAnswer.value);
+
+//saves answers on window reload
+  localStorage.setItem("selectedAnswers", JSON.stringify(selectedAnswers));
+
    
    if (selectedAnswer.value === currentQuestion.correct) {
      answerIsCorrect();
@@ -150,33 +132,6 @@ const showCorrectAnswer = () => {
     })
 }
 
-//saves user's selected answers
-const saveAnswer = (e) => {
-  const selected = e.target;
-  const answerObj = {
-    'Question': quizData.currentQuestionIndex + 1,
-    'Answer' : selected.value
-  }
- userAnswers.push(answerObj);
- selectedAnswers.push(selected.value);
-
- //saves answers on window reload
- localStorage.setItem("selectedAnswers", JSON.stringify(selectedAnswers));
- localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
-}
-
-//retrieves user's answers on page reload
-window.onload = function() {
-
-  if (localStorage.getItem('selectedAnswers')) {
-    const savedSelected = JSON.parse(localStorage.getItem('selectedAnswers'));
-
-    if (localStorage.getItem('userAnswers')) {
-     const savedUserAnswers = JSON.parse(localStorage.getItem('userAnswers'));
-
-     }
-   }
-}
 
 // Timer
 export function startTimer(time) {
